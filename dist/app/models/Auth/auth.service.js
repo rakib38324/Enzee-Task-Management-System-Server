@@ -107,13 +107,10 @@ const loginUser = (payload) => __awaiter(void 0, void 0, void 0, function* () {
     //===>check if the user is exists
     const isUserExists = yield userRegistration_model_1.User.findOne({ email: payload.email });
     if (!isUserExists) {
-        throw new appError_1.default(http_status_codes_1.default.NOT_FOUND, 'User not found! Check your Phone Number.');
+        throw new appError_1.default(http_status_codes_1.default.NOT_FOUND, 'User not found! Check your email.');
     }
     ///====> checking if the password is correct
     const isPasswordMatch = yield userRegistration_model_1.User.isPasswordMatched(payload === null || payload === void 0 ? void 0 : payload.password, isUserExists === null || isUserExists === void 0 ? void 0 : isUserExists.password);
-    console.log(isUserExists === null || isUserExists === void 0 ? void 0 : isUserExists.password);
-    console.log(payload === null || payload === void 0 ? void 0 : payload.password);
-    console.log(isPasswordMatch);
     if (!isPasswordMatch) {
         throw new appError_1.default(http_status_codes_1.default.FORBIDDEN, 'Incorrect password!');
     }

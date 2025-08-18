@@ -130,7 +130,7 @@ const loginUser = async (payload: TLoginUser) => {
   if (!isUserExists) {
     throw new AppError(
       httpStatus.NOT_FOUND,
-      'User not found! Check your Phone Number.',
+      'User not found! Check your email.',
     );
   }
 
@@ -140,9 +140,6 @@ const loginUser = async (payload: TLoginUser) => {
     isUserExists?.password as string,
   );
 
-  console.log(isUserExists?.password);
-  console.log(payload?.password);
-  console.log(isPasswordMatch);
   if (!isPasswordMatch) {
     throw new AppError(httpStatus.FORBIDDEN, 'Incorrect password!');
   }
