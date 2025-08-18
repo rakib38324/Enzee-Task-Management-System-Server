@@ -17,4 +17,5 @@ export default {
   super_admin_password: process.env.SUPPER_ADMIN_PASSWORD,
   email_vErification_ui_link: process.env.EMAIL_VERIFICATION_UI_LINK,
   reset_password_ui_link: process.env.RESET_PASSWORD_UI_LINK,
+  client_url_link: process.env.CLIENT_UI_LINK,
 };

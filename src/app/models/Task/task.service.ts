@@ -4,6 +4,8 @@ import { TTask } from './task.interface';
 import { JwtPayload } from 'jsonwebtoken';
 import { Task } from './task.model';
 import AppError from '../../errors/appError';
+import config from '../../config/config';
+import { sendEmail } from '../../utils/sendEmail';
 
 // ===> Create task into the database
 // ===> This function will create a new task in the database
@@ -66,14 +68,14 @@ const getTaskById = async (taskId: string, userId: string) => {
 const updateTaskStatus = async (
   taskId: string,
   status: string,
-  userId: JwtPayload,
+  userInfo: JwtPayload,
 ) => {
   const taskExists = await Task.findById(taskId).populate('task_created_by');
   if (!taskExists) {
     throw new AppError(httpStatus.FORBIDDEN, 'Task not found');
   }
 
-  if (taskExists.task_created_by._id.toString() !== userId.toString()) {
+  if (taskExists.task_created_by._id.toString() !== userInfo?._id?.toString()) {
     throw new AppError(
       httpStatus.FORBIDDEN,
       'You are not authorized to update this task. You can only update tasks you created.',
@@ -108,6 +110,50 @@ const updateTaskStatus = async (
     { status },
     { runValidators: true, new: true },
   );
+
+  if (updatedTask?.status === 'completed') {
+    const subject = 'Congratulations! Your Task is Completed';
+
+    const html = `
+     <body style="margin: 0; padding: 0; font-family: Arial, sans-serif; background-color: #f4f4f4;">
+  <div style="max-width: 600px; margin: 20px auto; background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+    
+    <!-- Header -->
+    <div style="background-color: rgb(246, 246, 246); text-align: center; font-size: 20px; padding: 20px;">
+      <h1 style="font-size: 24px; margin-bottom: 15px;">Enzee Tasks Management System</h1>
+    </div>
+
+    <!-- Body -->
+    <div style="padding: 20px; color: #333333;">
+      <h1 style="font-size: 20px; margin-bottom: 15px;">Dear ${userInfo?.name},</h1>
+      <p style="line-height: 1.6; margin-bottom: 20px;">
+        Great news! 🎉 Your task <strong>"${updatedTask?.title}"</strong> has been successfully completed.
+      </p>
+      <p style="text-align: center; margin-bottom: 20px;">
+        <a href="${config.client_url_link}" style="display: inline-block; padding: 10px 20px; font-size: 16px; color: #ffffff; background-color: #28a745; border-radius: 5px; text-decoration: none;">
+          View Completed Task
+        </a>
+      </p>
+      <p style="line-height: 1.6;">Thank you for using Enzee Task Management System to stay productive!</p>
+      <p style="margin-top: 20px;">Best regards,<br>The Enzee Tasks Management System Team</p>
+    </div>
+
+    <!-- Footer -->
+    <div style="text-align: center; background-color: #f4f4f4; padding: 20px; font-size: 12px; color: #888888;">
+      <p style="margin: 0;">Enzee Task Management</p>
+      <p style="margin: 10px 0;">
+        <a href="#" style="color: #6c5ce7; text-decoration: none; margin: 0 5px;">Privacy Policy</a> | 
+        <a href="#" style="color: #6c5ce7; text-decoration: none; margin: 0 5px;">Terms of Service</a> | 
+        <a href="#" style="color: #6c5ce7; text-decoration: none; margin: 0 5px;">Help Center</a>
+      </p>
+    </div>
+
+  </div>
+</body>
+     `;
+
+    sendEmail(subject, userInfo?.email, html);
+  }
   return updatedTask;
 };
 

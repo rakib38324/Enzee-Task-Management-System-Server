@@ -43,11 +43,7 @@ const getSingleTask = catchAsync(async (req, res) => {
 const updateTaskStatus = catchAsync(async (req, res) => {
   const taskId = req.params.id;
   const status = req.body.status;
-  const result = await TaskServices.updateTaskStatus(
-    taskId,
-    status,
-    req.user._id,
-  );
+  const result = await TaskServices.updateTaskStatus(taskId, status, req.user);
 
   commonRes(res, {
     statusCode: httpStatus.OK,

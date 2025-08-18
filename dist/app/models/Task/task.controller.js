@@ -53,7 +53,7 @@ const getSingleTask = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, 
 const updateTaskStatus = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const taskId = req.params.id;
     const status = req.body.status;
-    const result = yield task_service_1.TaskServices.updateTaskStatus(taskId, status, req.user._id);
+    const result = yield task_service_1.TaskServices.updateTaskStatus(taskId, status, req.user);
     (0, commonResponse_1.default)(res, {
         statusCode: http_status_codes_1.default.OK,
         success: true,
