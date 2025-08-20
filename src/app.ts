@@ -8,8 +8,8 @@ import cookieParser from 'cookie-parser';
 const app: Application = express();
 
 const allowedOrigins = [
-  "http://localhost:3000", // your Next.js local dev
-  "https://enzee-task-management-frontend.vercel.app", // production frontend
+  'http://localhost:3000', // your Next.js local dev
+  'https://enzee-task-management-frontend.vercel.app', // production frontend
 ];
 
 //--->parser
@@ -19,7 +19,7 @@ app.use(
   cors({
     origin: allowedOrigins,
     credentials: true, // <--- allow cookies/headers
-  })
+  }),
 );
 
 app.use(express.urlencoded({ extended: true }));
