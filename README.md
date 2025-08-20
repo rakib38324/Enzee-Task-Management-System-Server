@@ -78,7 +78,7 @@ backend/
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/your-username/task-management-system.git
+git clone https://github.com/rakib38324/Enzee-Task-Management-System-Server.git
 cd Enzee-Task-Management-System-Server
 ```
 
