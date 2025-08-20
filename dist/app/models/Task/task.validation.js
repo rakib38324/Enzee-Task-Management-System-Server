@@ -19,7 +19,7 @@ const updateTaskValidationSchema = zod_1.z.object({
         description: zod_1.z
             .string({ required_error: 'Description is required.' })
             .optional(),
-        dueDate: zod_1.z.date({ required_error: 'Due date is required.' }).optional(),
+        dueDate: zod_1.z.string({ required_error: 'Due date is required.' }).optional(),
     }),
 });
 exports.TaskValidations = {

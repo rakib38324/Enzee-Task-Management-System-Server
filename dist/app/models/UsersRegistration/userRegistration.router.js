@@ -10,7 +10,7 @@ const userRegistration_validation_1 = require("./userRegistration.validation");
 const userRegistration_controller_1 = require("./userRegistration.controller");
 const Auth_1 = __importDefault(require("../../middlewares/Auth"));
 const router = express_1.default.Router();
-router.post('/user-registration', userRegistration_controller_1.userControllers.createUsers);
+router.post('/user-registration', (0, validateRequest_1.default)(userRegistration_validation_1.UserValidations.createUserValidationSchema), userRegistration_controller_1.userControllers.createUsers);
 router.get('/get-me', (0, Auth_1.default)(), userRegistration_controller_1.userControllers.getMe);
 router.get('/', (0, Auth_1.default)(), userRegistration_controller_1.userControllers.getAllUsers);
 router.get('/:id', (0, Auth_1.default)(), userRegistration_controller_1.userControllers.getSingleUser);

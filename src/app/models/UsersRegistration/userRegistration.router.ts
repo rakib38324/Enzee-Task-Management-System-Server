@@ -5,7 +5,11 @@ import { userControllers } from './userRegistration.controller';
 import Auth from '../../middlewares/Auth';
 const router = express.Router();
 
-router.post('/user-registration', userControllers.createUsers);
+router.post(
+  '/user-registration',
+  ValidateRequest(UserValidations.createUserValidationSchema),
+  userControllers.createUsers,
+);
 
 router.get('/get-me', Auth(), userControllers.getMe);
 router.get('/', Auth(), userControllers.getAllUsers);

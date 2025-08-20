@@ -10,9 +10,17 @@ const routers_1 = __importDefault(require("./app/routers"));
 const globalErrorHandler_1 = __importDefault(require("./app/middlewares/globalErrorHandler"));
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const app = (0, express_1.default)();
+const allowedOrigins = [
+    "http://localhost:3000", // your Next.js local dev
+    "https://enzee-task-management-frontend.vercel.app", // production frontend
+];
 //--->parser
 app.use(express_1.default.json());
-app.use((0, cors_1.default)());
+// app.use(cors({ origin: '*' }));
+app.use((0, cors_1.default)({
+    origin: allowedOrigins,
+    credentials: true, // <--- allow cookies/headers
+}));
 app.use(express_1.default.urlencoded({ extended: true }));
 app.use((0, cookie_parser_1.default)());
 //==========>application routes

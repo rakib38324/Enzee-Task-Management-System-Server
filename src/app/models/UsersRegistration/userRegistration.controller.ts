@@ -8,7 +8,7 @@ const createUsers = catchAsync(async (req, res) => {
   commonRes(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Registration completed successfully',
+    message: 'Registration completed successfully, Now verify your email',
     data: result,
   });
 });

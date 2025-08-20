@@ -18,7 +18,7 @@ const updateTaskValidationSchema = z.object({
     description: z
       .string({ required_error: 'Description is required.' })
       .optional(),
-    dueDate: z.date({ required_error: 'Due date is required.' }).optional(),
+    dueDate: z.string({ required_error: 'Due date is required.' }).optional(),
   }),
 });
 

@@ -22,7 +22,7 @@ const createUsers = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, vo
     (0, commonResponse_1.default)(res, {
         statusCode: http_status_codes_1.default.OK,
         success: true,
-        message: 'Registration completed successfully',
+        message: 'Registration completed successfully, Now verify your email.',
         data: result,
     });
 }));
